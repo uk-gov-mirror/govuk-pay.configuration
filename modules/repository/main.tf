@@ -1,4 +1,4 @@
-resource "github_repository" "repo" {
+resource "github_repository" "this" {
   name                        = var.name
   description                 = var.repository.description
   visibility                  = var.repository.visibility
@@ -18,8 +18,8 @@ resource "github_repository" "repo" {
   archive_on_destroy          = true
 }
 
-resource "github_actions_repository_permissions" "actions_permissions" {
-  repository           = github_repository.repo.name
+resource "github_actions_repository_permissions" "this" {
+  repository           = github_repository.this.name
   enabled              = var.repository.actions_enabled
   sha_pinning_required = true
   allowed_actions      = "selected"
@@ -29,13 +29,13 @@ resource "github_actions_repository_permissions" "actions_permissions" {
   }
 }
 
-resource "github_branch_default" "default_branch" {
-  repository = github_repository.repo.name
+resource "github_branch_default" "this" {
+  repository = github_repository.this.name
   branch     = var.repository.default_branch
 }
 
-resource "github_branch_protection" "branch_protection" {
-  repository_id  = github_repository.repo.id
+resource "github_branch_protection" "this" {
+  repository_id  = github_repository.this.id
   pattern        = var.repository.default_branch
   enforce_admins = true
   required_pull_request_reviews {
@@ -45,8 +45,8 @@ resource "github_branch_protection" "branch_protection" {
   }
 }
 
-resource "github_repository_collaborators" "collaborators" {
-  repository = github_repository.repo.name
+resource "github_repository_collaborators" "this" {
+  repository = github_repository.this.name
 
   team {
     team_id    = "team-payments"
@@ -64,17 +64,17 @@ resource "github_repository_collaborators" "collaborators" {
   }
 }
 
-resource "github_repository_dependabot_security_updates" "security_updates" {
-  repository = github_repository.repo.name
+resource "github_repository_dependabot_security_updates" "this" {
+  repository = github_repository.this.name
   enabled    = true
 }
 
-resource "github_repository_vulnerability_alerts" "vulnerability_alerts" {
-  repository = github_repository.repo.name
+resource "github_repository_vulnerability_alerts" "this" {
+  repository = github_repository.this.name
   enabled    = true
 }
 
-resource "github_workflow_repository_permissions" "test" {
-  repository                   = github_repository.repo.name
+resource "github_workflow_repository_permissions" "this" {
+  repository                   = github_repository.this.name
   default_workflow_permissions = "read"
 }
