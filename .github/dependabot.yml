@@ -5,12 +5,12 @@
 version: 2
 updates:
   - package-ecosystem: "terraform" # See documentation for possible values
-    directory: "/teams" # Location of package manifests
+    directories: 
+      - "/**/*"
     schedule:
       interval: "daily"
     open-pull-requests-limit: 3
     target-branch: main
-    versioning-strategy: lockfile-only
   - package-ecosystem: "github-actions"
     # Workflow files stored in the
     # default location of `.github/workflows`
