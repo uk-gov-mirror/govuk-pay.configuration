@@ -38,10 +38,14 @@ resource "github_branch_protection" "this" {
   repository_id  = github_repository.this.id
   pattern        = var.repository.default_branch
   enforce_admins = true
-  required_pull_request_reviews {
-    required_approving_review_count = 1
-    require_last_push_approval      = true
-    dismiss_stale_reviews           = true
+  dynamic "required_pull_request_reviews" {
+    for_each = var.repository.allow_push_to_main ? [] : ["this"]
+
+    content {
+      required_approving_review_count = 1
+      require_last_push_approval      = true
+      dismiss_stale_reviews           = true
+    }
   }
 }
 

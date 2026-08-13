@@ -10,8 +10,9 @@ repos = {
   }
 
   "pay-architecture" = {
-    visibility      = "internal"
-    description     = "GOV.UK Pay architecture documentation"
-    has_discussions = true
+    visibility         = "internal"
+    description        = "GOV.UK Pay architecture documentation"
+    has_discussions    = true
+    allow_push_to_main = true
   }
 }
