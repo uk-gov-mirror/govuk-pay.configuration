@@ -38,6 +38,16 @@ resource "github_branch_protection" "this" {
   repository_id  = github_repository.this.id
   pattern        = var.repository.default_branch
   enforce_admins = true
+
+  dynamic "required_status_checks" {
+    for_each = var.repository.allow_push_to_main ? [] : ["this"]
+
+    content {
+      strict   = var.repository.fast_forward_only
+      contexts = var.repository.required_status_checks
+    }
+  }
+
   dynamic "required_pull_request_reviews" {
     for_each = var.repository.allow_push_to_main ? [] : ["this"]
 
