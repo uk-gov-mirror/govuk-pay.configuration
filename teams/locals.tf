@@ -24,6 +24,9 @@ locals {
       } if t.slug == team
     ]
   ])
+  
+
+  
 
   # Create object for each team-user relationship
   team_members = flatten([
